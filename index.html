@@ -1,0 +1,524 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="assets/favicon.ico" rel="shortcut icon" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap"
+            rel="stylesheet"
+    />
+    <link href="style.css" rel="stylesheet" />
+    <script src="js/canvas.js"></script>
+    <title>photoFilter</title>
+</head>
+<body>
+<header class="header">
+    <h1 class="header-title">Photo-filter</h1>
+</header>
+
+<main class="main container">
+    <div class="filters">
+        <label>
+            <svg class="filters__icon"><use xlink:href="#blur" /></svg>
+            Blur
+            <input
+                    name="blur"
+                    data-sizing="px"
+                    type="range"
+                    min="0"
+                    max="10"
+                    value="0"
+            />
+            <output name="blur">0</output>
+        </label>
+
+        <label>
+            <svg class="filters__icon"><use xlink:href="#invert" /></svg>
+            Invert
+            <input
+                    name="invert"
+                    data-sizing="%"
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="0"
+            />
+            <output name="invert">0</output>
+        </label>
+
+        <label>
+            <svg class="filters__icon"><use xlink:href="#sepia" /></svg>
+            Sepia
+            <input
+                    name="sepia"
+                    data-sizing="%"
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="0"
+            />
+            <output name="sepia">0</output>
+        </label>
+
+        <label>
+            <svg class="filters__icon"><use xlink:href="#saturate" /></svg>
+            Saturate
+            <input
+                    name="saturate"
+                    data-sizing="%"
+                    type="range"
+                    min="0"
+                    max="200"
+                    value="100"
+            />
+            <output name="saturate">100</output>
+        </label>
+
+        <label>
+            <svg class="filters__icon"><use xlink:href="#hue" /></svg>
+            Hue rotate
+            <input
+                    name="hue-rotate"
+                    data-sizing="deg"
+                    type="range"
+                    min="0"
+                    max="360"
+                    value="0"
+            />
+            <output name="hue-rotate">0</output>
+        </label>
+
+        <label>
+            <svg class="filters__icon"><use xlink:href="#contrast" /></svg>
+            Contrast
+            <input
+                    name="contrast"
+                    data-sizing="%"
+                    type="range"
+                    min="0"
+                    max="200"
+                    value="100"
+            />
+            <output name="contrast">100</output>
+        </label>
+
+        <label>
+            <svg class="filters__icon"><use xlink:href="#brightness" /></svg>
+            Brightness
+            <input
+                    name="brightness"
+                    data-sizing="%"
+                    type="range"
+                    min="0"
+                    max="200"
+                    value="100"
+            />
+            <output name="brightness">100</output>
+        </label>
+
+        <label>
+            <svg class="filters__icon"><use xlink:href="#grayscale" /></svg>
+            Grayscale
+            <input
+                    name="grayscale"
+                    data-sizing="%"
+                    type="range"
+                    min="0"
+                    max="200"
+                    value="100"
+            />
+            <output name="grayscale">0</output>
+        </label>
+
+        <div class="btn-container">
+            <button class="btn btn-reset">Reset</button>
+            <button class="btn btn-next btn-active">Next picture</button>
+            <label class="btn btn-load" for="fileLoad">
+                Load picture
+                <input
+                        class="btn-load--input"
+                        id="fileLoad"
+                        name="upload"
+                        type="file"
+                        placeholder="Load picture"
+                        accept=".jpg, .jpeg, .png, .gif"
+                />
+            </label>
+            <button class="btn btn-save">Save picture</button>
+        </div>
+    </div>
+
+    <div class="editor">
+        <img
+                class="editor__image"
+                id="image"
+                src="assets/img/img.jpg"
+                alt="image"
+        />
+        <canvas class="canvas"></canvas>
+        <div class="presets">
+            <div class="presets__element active">
+                <img class="presets__img" src="assets/img/img.jpg" alt="normal" />
+                <p class="presets__title">normal</p>
+            </div>
+
+            <div class="presets__element">
+                <img
+                        class="presets__img"
+                        style="filter: contrast(110%) brightness(110%) saturate(130%)"
+                        src="assets/img/img.jpg"
+                        alt="1977"
+                />
+                <p class="presets__title">1977</p>
+            </div>
+
+            <div class="presets__element">
+                <img
+                        class="presets__img"
+                        style="
+                filter: contrast(90%) brightness(120%) saturate(85%)
+                  hue-rotate(20deg);
+              "
+                        src="assets/img/img.jpg"
+                        alt="Aden"
+                />
+                <p class="presets__title">Aden</p>
+            </div>
+
+            <div class="presets__element">
+                <img
+                        class="presets__img"
+                        style="
+                filter: contrast(90%) brightness(110%) saturate(150%)
+                  hue-rotate(-10deg);
+              "
+                        src="assets/img/img.jpg"
+                        alt="Amaro"
+                />
+                <p class="presets__title">Amaro</p>
+            </div>
+
+            <div class="presets__element">
+                <img
+                        class="presets__img"
+                        style="filter: contrast(140%) sepia(50%)"
+                        src="assets/img/img.jpg"
+                        alt="Brannan"
+                />
+                <p class="presets__title">Brannan</p>
+            </div>
+
+            <div class="presets__element">
+                <img
+                        class="presets__img"
+                        style="filter: contrast(90%) brightness(110%)"
+                        src="assets/img/img.jpg"
+                        alt="Brooklyn"
+                />
+                <p class="presets__title">Brooklyn</p>
+            </div>
+
+            <div class="presets__element">
+                <img
+                        class="presets__img"
+                        style="filter: contrast(120%) saturate(125%)"
+                        src="assets/img/img.jpg"
+                        alt="clarendon"
+                />
+                <p class="presets__title">clarendon</p>
+            </div>
+
+            <div class="presets__element">
+                <img
+                        class="presets__img"
+                        style="
+                filter: contrast(110%) brightness(110%) sepia(30%)
+                  grayscale(100%);
+              "
+                        src="assets/img/img.jpg"
+                        alt="inkwell"
+                />
+                <p class="presets__title">inkwell</p>
+            </div>
+
+            <div class="presets__element">
+                <img
+                        class="presets__img"
+                        style="filter: brightness(115%) contrast(75%) saturate(85%)"
+                        src="assets/img/img.jpg"
+                        alt="stinson"
+                />
+                <p class="presets__title">stinson</p>
+            </div>
+
+            <div class="presets__element">
+                <img
+                        class="presets__img"
+                        style="
+                filter: sepia(30%) brightness(110%) saturate(160%)
+                  hue-rotate(350deg);
+              "
+                        src="assets/img/img.jpg"
+                        alt="walden"
+                />
+                <p class="presets__title">walden</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer"></footer>
+<button class="fullscreen openfullscreen"></button>
+
+<svg style="display: none">
+    <symbol id="blur" viewbox="0 0 293 293">
+        <g>
+            <path
+                    d="M229.4,251.178c-19.485,26.574-49.635,41.816-82.72,41.822c-0.001,0-0.002,0-0.003,0h-0.007h-0.008
+	c-0.108,0-0.217,0-0.327,0c-33.089,0-63.244-15.242-82.732-41.817c-19.377-26.423-25.15-60.584-15.445-91.381
+	c2.279-7.231,5.394-14.269,9.257-20.916c0.107-0.184,0.218-0.364,0.332-0.543c3.795-5.935,7.626-11.86,11.462-17.793
+	C92.11,85.13,115.79,48.504,131.608,9.378c2.256-5.581,7.631-9.272,13.649-9.376c0.422-0.006,0.836,0.003,1.249,0.03
+	c0.414-0.027,0.829-0.034,1.248-0.03c6.019,0.104,11.394,3.795,13.649,9.376c15.825,39.146,39.517,75.789,62.428,111.226
+	c3.823,5.915,7.644,11.822,11.427,17.738c0.114,0.18,0.226,0.361,0.332,0.546c3.857,6.638,6.971,13.675,9.252,20.915
+	C254.547,190.595,248.775,224.755,229.4,251.178z"
+            />
+        </g>
+    </symbol>
+    <symbol id="sepia" viewbox="0 0 32 32">
+        <g>
+            <path
+                    d="M21.172,13.98l5.691-9.664C24.008,1.658,20.211,0,16,0c-0.998,0-1.965,0.119-2.912,0.293
+            L21.172,13.98z"
+            />
+            <path
+                    d="M19.951,20h11.482C31.766,18.715,32,17.391,32,16c0-3.873-1.43-7.377-3.723-10.145L19.951,20z"
+            />
+            <path
+                    d="M16.5,10l-5.408-9.152C6.592,2.307,2.953,5.646,1.188,10H16.5z"
+            />
+            <path
+                    d="M15.633,22l5.391,9.117c4.449-1.484,8.039-4.801,9.789-9.117H15.633z"
+            />
+            <path
+                    d="M12.105,12H0.566C0.232,13.285,0,14.609,0,16c0,3.891,1.445,7.41,3.756,10.188L12.105,12z"
+            />
+            <path
+                    d="M10.918,17.961l-5.744,9.758C8.027,30.352,11.809,32,16,32c1.041,0,2.055-0.117,3.041-0.305
+            L10.918,17.961z"
+            />
+        </g>
+    </symbol>
+    <symbol id="saturate" viewbox="0 0 512 512">
+        <g>
+            <g>
+                <path
+                        d="M344.767,102.04c-15.765,10.353-95.154,63.098-109.997,84.841c-8.886,13.015-12.49,28.553-10.15,43.751
+              c2.398,15.574,10.706,28.922,23.395,37.584c9.193,6.275,19.837,9.514,30.855,9.514c4.188,0,8.433-0.469,12.669-1.416
+              c15.006-3.357,28.163-12.373,37.048-25.389c14.837-21.733,35.162-114.79,39.085-133.224l7.598-35.693L344.767,102.04z
+               M303.809,234.011c-4.58,6.71-11.265,11.336-18.819,13.026c-7.185,1.605-14.308,0.328-20.061-3.599s-9.538-10.097-10.658-17.372
+              c-1.178-7.651,0.696-15.562,5.277-22.271c6.272-9.189,38.849-33.582,70.413-55.519C320.98,185.63,310.084,224.818,303.809,234.011
+              z"
+                />
+            </g>
+        </g>
+        <g>
+            <g>
+                <path
+                        d="M437.02,74.98C388.667,26.629,324.38,0,256,0S123.333,26.629,74.98,74.98C26.629,123.333,0,187.62,0,256
+              s26.629,132.667,74.98,181.02C123.333,485.371,187.62,512,256,512s132.667-26.629,181.02-74.98
+              C485.371,388.667,512,324.38,512,256S485.371,123.333,437.02,74.98z M256,482C131.383,482,30,380.617,30,256S131.383,30,256,30
+              s226,101.383,226,226S380.617,482,256,482z"
+                />
+            </g>
+        </g>
+    </symbol>
+    <symbol id="invert" viewbox="0 0 459 459">
+        <g>
+            <path
+                    d="M357,229.5c0-71.4-56.1-127.5-127.5-127.5v255C300.9,357,357,300.9,357,229.5z M408,0H51C22.95,0,0,22.95,0,51v357
+          c0,28.05,22.95,51,51,51h357c28.05,0,51-22.95,51-51V51C459,22.95,436.05,0,408,0z M408,408H229.5v-51
+          C158.1,357,102,300.9,102,229.5c0-71.4,56.1-127.5,127.5-127.5V51H408V408z"
+            />
+        </g>
+    </symbol>
+    <symbol id="hue" viewbox="0 0 493.77 493.77">
+        <g>
+            <path
+                    id="XMLID_190_"
+                    d="M246.885,0C110.536,0,0,110.535,0,246.885S110.536,493.77,246.885,493.77
+          c136.35,0,246.885-110.535,246.885-246.885S383.234,0,246.885,0z M246.885,444.395V49.377c108.905,0,197.508,88.596,197.508,197.508
+          S355.789,444.395,246.885,444.395z"
+            />
+        </g>
+    </symbol>
+    <symbol id="grayscale" viewbox="0 0 512 512">
+        <g>
+            <g>
+                <g>
+                    <path
+                            d="M271.237,0.223v37.138h118.735C354.295,15.446,313.746,2.663,271.237,0.223z"
+                    />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                            d="M437.402,74.822c-2.544-2.543-5.14-5.012-7.77-7.435H271.237v37.849h192.211
+                C455.632,94.542,446.947,84.368,437.402,74.822z"
+                    />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                            d="M482.354,135.263H271.237v37.849h227.553C494.348,160.074,488.865,147.419,482.354,135.263z"
+                    />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                            d="M271.237,406.763v37.849h158.395c2.629-2.422,5.227-4.891,7.77-7.435c9.545-9.545,18.23-19.719,26.046-30.415H271.237z"
+                    />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                            d="M271.237,474.638v37.137c42.509-2.44,83.058-15.222,118.735-37.137H271.237z"
+                    />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                            d="M507.003,203.138H271.237v37.849H512C511.264,228.166,509.587,215.524,507.003,203.138z"
+                    />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                            d="M75.046,74.822C26.652,123.217,0,187.561,0,256s26.652,132.783,75.046,181.177
+                c44.838,44.838,103.371,70.994,166.165,74.599V0.223C178.418,3.828,119.885,29.984,75.046,74.822z"
+                    />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                            d="M271.237,271.013v37.849h235.766c2.584-12.386,4.262-25.028,4.997-37.849H271.237z"
+                    />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                            d="M271.237,338.888v37.849h211.117c6.511-12.156,11.992-24.811,16.435-37.849H271.237z"
+                    />
+                </g>
+            </g>
+        </g>
+    </symbol>
+    <symbol id="brightness" viewbox="0 0 384 384">
+        <g>
+            <g>
+                <g>
+                    <path
+                            d="M101.488,78.864L78.864,56.24c-6.24-6.248-16.384-6.248-22.624,0c-6.248,6.248-6.248,16.376,0,22.624l22.624,22.624
+                c3.12,3.128,7.216,4.688,11.312,4.688c4.096,0,8.192-1.56,11.312-4.688C107.736,95.24,107.736,85.112,101.488,78.864z"
+                    />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                            d="M48,176H16c-8.832,0-16,7.168-16,16c0,8.832,7.168,16,16,16h32c8.832,0,16-7.168,16-16C64,183.168,56.832,176,48,176z"
+                    />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                            d="M101.488,282.512c-6.24-6.248-16.384-6.248-22.624,0L56.24,305.136c-6.248,6.248-6.248,16.376,0,22.624
+                c3.12,3.128,7.216,4.688,11.312,4.688s8.192-1.56,11.312-4.688l22.624-22.624C107.736,298.888,107.736,288.76,101.488,282.512z"
+                    />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                            d="M192,320c-8.832,0-16,7.168-16,16v32c0,8.832,7.168,16,16,16c8.832,0,16-7.168,16-16v-32C208,327.168,200.832,320,192,320
+                z"
+                    />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                            d="M327.76,305.136l-22.624-22.624c-6.24-6.248-16.384-6.248-22.624,0c-6.248,6.248-6.248,16.376,0,22.624l22.624,22.624
+                c3.12,3.128,7.216,4.688,11.312,4.688s8.192-1.56,11.312-4.688C334.008,321.512,334.008,311.384,327.76,305.136z"
+                    />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                            d="M368,176h-32c-8.832,0-16,7.168-16,16c0,8.832,7.168,16,16,16h32c8.832,0,16-7.168,16-16C384,183.168,376.832,176,368,176
+                z"
+                    />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                            d="M327.76,56.24c-6.24-6.248-16.384-6.248-22.624,0l-22.624,22.624c-6.248,6.248-6.248,16.376,0,22.624
+                c3.12,3.128,7.216,4.688,11.312,4.688s8.192-1.56,11.312-4.688l22.624-22.624C334.008,72.616,334.008,62.488,327.76,56.24z"
+                    />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                            d="M192,0c-8.832,0-16,7.168-16,16v32c0,8.832,7.168,16,16,16c8.832,0,16-7.168,16-16V16C208,7.168,200.832,0,192,0z"
+                    />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                            d="M192,88c-57.344,0-104,46.656-104,104s46.656,104,104,104s104-46.656,104-104S249.344,88,192,88z M192,264
+                c-39.696,0-72-32.304-72-72s32.304-72,72-72s72,32.304,72,72S231.696,264,192,264z"
+                    />
+                </g>
+            </g>
+        </g>
+    </symbol>
+    <symbol id="contrast" viewbox="0 0 512 512">
+        <g>
+            <g>
+                <path
+                        d="M437.02,74.98C388.667,26.629,324.38,0,256,0S123.333,26.629,74.98,74.98C26.629,123.332,0,187.62,0,256
+              s26.629,132.668,74.98,181.02C123.333,485.371,187.62,512,256,512s132.667-26.629,181.02-74.98
+              C485.371,388.668,512,324.38,512,256S485.371,123.332,437.02,74.98z M241,481.49C123.351,473.742,30,375.575,30,256
+              S123.351,38.258,241,30.51V481.49z M271,30.51c35.626,2.346,69.022,12.976,98.273,29.99H271V30.51z M271,90.5h138.725
+              c9.921,9.222,19.024,19.313,27.165,30.166H271V90.5z M271,150.666h184.9c5.113,9.664,9.544,19.741,13.232,30.167H271V150.666z
+               M271,210.833h206.462c2.004,9.839,3.352,19.912,4.028,30.167H271V210.833z M271,481.49V451.5h98.273
+              C340.022,468.514,306.625,479.144,271,481.49z M409.725,421.5H271v-30.167h165.89C428.749,402.188,419.646,412.278,409.725,421.5z
+               M455.9,361.333H271v-30.167h198.132C465.444,341.592,461.013,351.669,455.9,361.333z M477.462,301.167H271V271h210.49
+              C480.815,281.254,479.466,291.327,477.462,301.167z"
+                />
+            </g>
+        </g>
+    </symbol>
+</svg>
+
+<script src="js/script.js"></script>
+<script src="js/slider.js"></script>
+</body>
+</html>
